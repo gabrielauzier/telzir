@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ResultModal } from "../ResultModal";
 import {
   Container,
   PlanTypeContainer,
@@ -13,6 +14,11 @@ export function Simulation() {
   const [planType, setPlanType] = useState<PlanTypes>("fale-mais-30");
   const [regionOrigin, setRegionOrigin] = useState<RegionTypes>("11");
   const [regionDestiny, setRegionDestiny] = useState<RegionTypes>("11");
+  const [isResultModalOpen, setIsResultModalOpen] = useState(false);
+
+  function handleToggleResultModal() {
+    setIsResultModalOpen(!isResultModalOpen);
+  }
 
   return (
     <Container>
@@ -116,8 +122,14 @@ export function Simulation() {
           </PlanTypeRadioBox>
         </PlanTypeContainer>
 
-        <button type="button">Simular chamada</button>
+        <button type="button" onClick={handleToggleResultModal}>
+          Simular chamada
+        </button>
       </form>
+      <ResultModal
+        isOpen={isResultModalOpen}
+        onRequestClose={handleToggleResultModal}
+      />
     </Container>
   );
 }

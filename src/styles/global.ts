@@ -83,4 +83,29 @@ export const GlobalStyle = createGlobalStyle`
         color: var(--text-body-light);
         font-weight: 400;
     }
+
+    .react-modal-overlay {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #00000050;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .react-modal-content {
+        background: var(--body-color);
+        outline: none;
+        width: 100%;
+        max-width: 576px;
+        padding: 2rem 3rem;
+        border-radius: 0.25rem;
+        position: relative;
+    }
 `;
