@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
     :root {
-        --hue: 240;
+        --hue:245;
         --base-color: hsl(var(--hue) 36% 57%);
         --base-color-second: hsl(var(--hue) 65% 88%);
         --base-color-alt: hsl(var(--hue) 57% 53%);
@@ -10,6 +10,8 @@ export const GlobalStyle = createGlobalStyle`
         --text-color: hsl(0 0% 46%);
         --text-color-light: hsl(0 0% 98%);
         --body-color: hsl(0 0% 98%);
+        --input-background: #E7E9EE;
+        --input-border: #D7D7D7;
     }
 
     * {
@@ -57,9 +59,28 @@ export const GlobalStyle = createGlobalStyle`
         &:hover {
             filter: brightness(0.9);
         }
+
+        width: 100%;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 0.25rem;
+        background: var(--base-color);
+        color: var(--text-color-light);
+
+        &:focus {
+            outline: 2px solid var(--base-color-alt);
+        }
+    }
+    
+    ul {
+        list-style: none;
+        li {
+            margin: 1rem 0;
+        }
     }
 
     ::placeholder {
-        color: var(--text-body)
+        color: var(--text-body-light);
+        font-weight: 400;
     }
 `;
