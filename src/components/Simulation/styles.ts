@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Alert as AlertMUI } from "@mui/material";
 
 export const Container = styled.div`
   max-width: 720px;
@@ -11,7 +12,7 @@ export const Container = styled.div`
   }
 
   form {
-    margin-top: 2rem;
+    margin: 2rem 0;
 
     label {
       display: block;
@@ -27,6 +28,12 @@ export const Container = styled.div`
 
       &:focus {
         outline: 2px solid var(--base-color);
+      }
+    }
+
+    button {
+      svg {
+        color: white;
       }
     }
   }
@@ -94,4 +101,8 @@ export const RegionRadioBox = styled.button<RadioBoxProps>`
   &:focus {
     outline: 2px solid var(--base-color);
   }
+`;
+
+export const Alert = styled(AlertMUI)`
+  margin-top: 0.5rem;
 `;

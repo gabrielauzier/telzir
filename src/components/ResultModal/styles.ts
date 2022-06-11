@@ -35,4 +35,8 @@ export const Item = styled.div`
     color: var(--base-color);
     font-size: 1.5rem;
   }
+
+  .discount {
+    color: red;
+  }
 `;

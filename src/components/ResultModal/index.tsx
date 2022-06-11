@@ -1,14 +1,36 @@
 import { Item, Modal } from "./styles";
 import { X as CloseIcon } from "phosphor-react";
+import { DDDTypes, planTypes, PlanTypes } from "../../utils/types";
+import calculateTotalWithoutPlan from "../../utils/calculateTotalWithoutPlan";
+import calculateTotalWithPlan from "../../utils/calculateTotalWithPlan";
+import { useEffect, useState } from "react";
+
+export interface DataProps {
+  origin: DDDTypes;
+  destiny: DDDTypes;
+  duration: number;
+  plan: PlanTypes;
+}
 
 interface ResultModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
+  data: DataProps;
 }
 
 Modal.setAppElement("#root");
 
-export function ResultModal({ isOpen, onRequestClose }: ResultModalProps) {
+export function ResultModal({
+  isOpen,
+  onRequestClose,
+  data,
+}: ResultModalProps) {
+  const totalValueWithPlan = Number(calculateTotalWithPlan(data).toFixed(2));
+  const totalValueWithoutPlan = Number(
+    calculateTotalWithoutPlan(data).toFixed(2)
+  );
+  const discount = Number(totalValueWithoutPlan - totalValueWithPlan);
+
   return (
     <Modal
       isOpen={isOpen}
@@ -17,37 +39,53 @@ export function ResultModal({ isOpen, onRequestClose }: ResultModalProps) {
       className="react-modal-content"
     >
       <header>
-        <h2>Fale Mais 60</h2>
+        <h2>{planTypes[data.plan]?.label}</h2>
         <CloseIcon size={24} onClick={onRequestClose} />
       </header>
       <main>
         <Item>
           <p>DDD de origem</p>
-          <p>11</p>
+          <p>{data.origin}</p>
         </Item>
         <Item>
           <p>DDD de destino</p>
-          <p>16</p>
+          <p>{data.destiny}</p>
         </Item>
         <Item>
           <p>Duração da chamada</p>
-          <p>10 min</p>
+          <p>{data.duration} min</p>
         </Item>
         <Item>
           <p>Plano escolhido</p>
-          <p>Fale Mais 30</p>
+          <p>{planTypes[data.plan]?.label} </p>
         </Item>
         <Item>
           <p>Valor total sem plano</p>
-          <p>R$ 12,00</p>
+          <p>
+            {totalValueWithoutPlan?.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })}
+          </p>
         </Item>
         <Item>
-          <p>Desconto</p>
-          <p>- R$ 12,00</p>
+          <p>{discount > 0 ? "Desconto" : "Juros"}</p>
+          <p className="discount">
+            {""}
+            {discount?.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })}
+          </p>
         </Item>
         <Item>
           <strong>Valor total com plano</strong>
-          <strong>R$ 0,00</strong>
+          <strong>
+            {totalValueWithPlan?.toLocaleString("pt-BR", {
+              style: "currency",
+              currency: "BRL",
+            })}
+          </strong>
         </Item>
       </main>
     </Modal>

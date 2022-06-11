@@ -1,24 +1,67 @@
-import { useState } from "react";
-import { ResultModal } from "../ResultModal";
+import { FormEvent, useEffect, useState } from "react";
+import { DDDTypes, PlanTypes } from "../../utils/types";
+import validateCall from "../../utils/validateCall";
+import { DataProps, ResultModal } from "../ResultModal";
+
 import {
   Container,
   PlanTypeContainer,
   PlanTypeRadioBox,
   RegionRadioBox,
+  Alert,
 } from "./styles";
 
-type PlanTypes = "fale-mais-30" | "fale-mais-60" | "fale-mais-120";
-type RegionTypes = "11" | "16" | "17" | "18";
+import { X as CloseIcon } from "phosphor-react";
+import { Collapse, IconButton } from "@mui/material";
 
 export function Simulation() {
-  const [planType, setPlanType] = useState<PlanTypes>("fale-mais-30");
-  const [regionOrigin, setRegionOrigin] = useState<RegionTypes>("11");
-  const [regionDestiny, setRegionDestiny] = useState<RegionTypes>("11");
+  const [regionOrigin, setRegionOrigin] = useState<DDDTypes>("11");
+  const [regionDestiny, setRegionDestiny] = useState<DDDTypes>("11");
+  const [duration, setDuration] = useState(0);
+  const [planType, setPlanType] = useState<PlanTypes>("FALE_MAIS_30");
+
+  const [data, setData] = useState({});
+
   const [isResultModalOpen, setIsResultModalOpen] = useState(false);
+  const [isShowingDurationError, setIsShowingDurationError] = useState(false);
+  const [isShowingCallTypeError, setIsShowingCallTypeError] = useState(false);
 
   function handleToggleResultModal() {
     setIsResultModalOpen(!isResultModalOpen);
   }
+
+  function handleSimulatePlan(e: FormEvent) {
+    e.preventDefault();
+
+    setData({
+      destiny: regionDestiny,
+      origin: regionOrigin,
+      plan: planType,
+      duration,
+    });
+
+    let isInvalidFields = false;
+
+    if (!validateCall(`${regionOrigin}-${regionDestiny}`)) {
+      setIsShowingCallTypeError(true);
+      isInvalidFields = true;
+    }
+
+    if (duration === 0) {
+      setIsShowingDurationError(true);
+      isInvalidFields = true;
+    }
+
+    if (!isInvalidFields) handleToggleResultModal();
+  }
+
+  useEffect(() => {
+    setIsShowingDurationError(false);
+  }, [duration]);
+
+  useEffect(() => {
+    setIsShowingCallTypeError(false);
+  }, [regionOrigin, regionDestiny]);
 
   return (
     <Container>
@@ -85,6 +128,26 @@ export function Simulation() {
           18
         </RegionRadioBox>
 
+        <Collapse in={isShowingCallTypeError}>
+          <Alert
+            severity="error"
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => {
+                  setIsShowingCallTypeError(false);
+                }}
+              >
+                <CloseIcon size={16} color="gray" />
+              </IconButton>
+            }
+          >
+            Não cobrimos esse tipo de ligação. Por favor, informe outros DDDs.
+          </Alert>
+        </Collapse>
+
         <label htmlFor="duration">
           Qual será a duração da chamada? (em minutos)
         </label>
@@ -92,42 +155,63 @@ export function Simulation() {
           type="number"
           id="duration"
           min={0}
+          onChange={(text) => setDuration(Number(text.target.value))}
           placeholder="Digite o tempo..."
         />
+        <Collapse in={isShowingDurationError}>
+          <Alert
+            severity="error"
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => {
+                  setIsShowingDurationError(false);
+                }}
+              >
+                <CloseIcon size={16} color="gray" />
+              </IconButton>
+            }
+          >
+            Informe a duração da chamada
+          </Alert>
+        </Collapse>
 
         <label htmlFor="plan-selection">Selecione o plano</label>
         <PlanTypeContainer id="plan-selection">
           <PlanTypeRadioBox
             type="button"
-            onClick={() => setPlanType("fale-mais-30")}
-            isActive={planType === "fale-mais-30"}
+            onClick={() => setPlanType("FALE_MAIS_30")}
+            isActive={planType === "FALE_MAIS_30"}
           >
             <span>Fale Mais 30</span>
           </PlanTypeRadioBox>
 
           <PlanTypeRadioBox
             type="button"
-            onClick={() => setPlanType("fale-mais-60")}
-            isActive={planType === "fale-mais-60"}
+            onClick={() => setPlanType("FALE_MAIS_60")}
+            isActive={planType === "FALE_MAIS_60"}
           >
             <span>Fale Mais 60</span>
           </PlanTypeRadioBox>
 
           <PlanTypeRadioBox
             type="button"
-            onClick={() => setPlanType("fale-mais-120")}
-            isActive={planType === "fale-mais-120"}
+            onClick={() => setPlanType("FALE_MAIS_120")}
+            isActive={planType === "FALE_MAIS_120"}
           >
             <span>Fale Mais 120</span>
           </PlanTypeRadioBox>
         </PlanTypeContainer>
 
-        <button type="button" onClick={handleToggleResultModal}>
+        <button type="button" onClick={handleSimulatePlan}>
           Simular chamada
         </button>
       </form>
       <ResultModal
         isOpen={isResultModalOpen}
+        data={data as DataProps}
         onRequestClose={handleToggleResultModal}
       />
     </Container>
