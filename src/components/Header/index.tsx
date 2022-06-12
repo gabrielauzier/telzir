@@ -1,29 +1,25 @@
-import { useLocation } from "react-router-dom";
-import { Container, NavLink } from "./styles";
+import { useState } from "react";
+import { SocialSignInButton } from "../SocialSignInButton";
+import { MobileMenu } from "./components/MobileMenu";
+import { Navbar } from "./components/Navbar";
+import { Container, MenuIconForMobile } from "./styles";
 
 export function Header() {
-  const { pathname } = useLocation();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  function toggleMobileMenu() {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  }
 
   return (
     <Container>
       <div>
-        <nav>
-          <NavLink to="/" className={pathname === "/" ? "active" : ""}>
-            Home
-          </NavLink>
-          <NavLink
-            to="/plans"
-            className={pathname === "/plans" ? "active" : ""}
-          >
-            Planos
-          </NavLink>
-          <NavLink
-            to="/simulation"
-            className={pathname === "/simulation" ? "active" : ""}
-          >
-            Simulação
-          </NavLink>
-        </nav>
+        <Navbar />
+
+        <MenuIconForMobile onClick={toggleMobileMenu} />
+        <MobileMenu isOpen={isMobileMenuOpen} onClose={toggleMobileMenu} />
+
+        <SocialSignInButton />
       </div>
     </Container>
   );
