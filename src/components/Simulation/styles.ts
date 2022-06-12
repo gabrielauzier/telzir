@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Alert as AlertMUI } from "@mui/material";
+import { Alert as AlertMUI, IconButton as IconButtonMUI } from "@mui/material";
 
 export const Container = styled.div`
   max-width: 720px;
@@ -46,11 +46,11 @@ export const PlanTypeContainer = styled.div`
   gap: 0.5rem;
 `;
 
-interface RadioBoxProps {
+interface RadioButtonProps {
   isActive: boolean;
 }
 
-export const PlanTypeRadioBox = styled.button<RadioBoxProps>`
+export const PlanTypeRadioButton = styled.button<RadioButtonProps>`
   border-width: 2px;
   border-style: solid;
   border-color: ${({ isActive }) =>
@@ -75,7 +75,7 @@ export const PlanTypeRadioBox = styled.button<RadioBoxProps>`
   }
 `;
 
-export const RegionRadioBox = styled.button<RadioBoxProps>`
+export const TelephoneRegionRadioButton = styled.button<RadioButtonProps>`
   width: auto;
   border-width: 2px;
   border-style: solid;
@@ -103,6 +103,12 @@ export const RegionRadioBox = styled.button<RadioBoxProps>`
   }
 `;
 
-export const Alert = styled(AlertMUI)`
+export const Alert = styled(AlertMUI).attrs({ severity: "error" })`
   margin-top: 0.5rem;
 `;
+
+export const IconButton = styled(IconButtonMUI).attrs({
+  aria_label: "close",
+  color: "inherit",
+  size: "small",
+})``;
