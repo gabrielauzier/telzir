@@ -1,5 +1,6 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { Header } from "./components/Header";
+import { History } from "./components/History";
 import { Home } from "./components/Home";
 import { Plans } from "./components/Plans";
 import { Simulation } from "./components/Simulation";
@@ -16,6 +17,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/plans" element={<Plans />} />
             <Route path="/simulation" element={<Simulation />} />
+            <Route path="/history" element={<History />} />
           </Routes>
           <GlobalStyle />
         </div>

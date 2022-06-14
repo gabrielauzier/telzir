@@ -8,6 +8,7 @@ import { Container } from "./styles";
 import { TelephoneRegionRadioBox } from "./components/TelephoneRegionRadioBox";
 import { PlanTypeRadioBox } from "./components/PlanTypeRadioBox";
 import { AlertMessage } from "./components/AlertMessage";
+import { updateHistory } from "../../services/api";
 
 export function Simulation() {
   const [origin, setOrigin] = useState<DDDTypes>("11");
@@ -25,7 +26,7 @@ export function Simulation() {
     setIsResultModalOpen(!isResultModalOpen);
   }
 
-  function handleSimulatePlan(e: FormEvent) {
+  async function handleSimulatePlan(e: FormEvent) {
     e.preventDefault();
 
     setData({
@@ -47,7 +48,16 @@ export function Simulation() {
       thereAreInvalidFields = true;
     }
 
-    if (!thereAreInvalidFields) handleToggleResultModal();
+    if (!thereAreInvalidFields) {
+      handleToggleResultModal();
+      await updateHistory({
+        origin,
+        destiny,
+        duration,
+        plan,
+        createdAt: new Date(),
+      });
+    }
   }
 
   useEffect(() => {
