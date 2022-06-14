@@ -6,6 +6,7 @@ import {
   signOut as firebaseSignOut,
 } from "firebase/auth";
 import { auth } from "../services/firebase";
+import { createUser } from "../services/api";
 
 interface User {
   id: string;
@@ -38,6 +39,7 @@ function AuthProvider({ children }: AuthProviderProps) {
           throw new Error("Missing information from Google Account");
 
         setUser({ id: uid, name: displayName, email, photo: photoURL });
+        createUser({ email, name: displayName, history: [], photo: photoURL });
       })
       .catch((err) => console.log(err));
   }
