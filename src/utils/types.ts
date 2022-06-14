@@ -25,3 +25,10 @@ export const callTypes = {
 export type PlanTypes = keyof typeof planTypes;
 export type CallTypes = keyof typeof callTypes;
 export type DDDTypes = "11" | "16" | "17" | "18";
+
+export interface DataParams {
+  origin: DDDTypes;
+  destiny: DDDTypes;
+  duration: number;
+  plan: PlanTypes;
+}
