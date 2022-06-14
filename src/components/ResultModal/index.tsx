@@ -3,7 +3,6 @@ import { X as CloseIcon } from "phosphor-react";
 import { DDDTypes, planTypes, PlanTypes } from "../../utils/types";
 import calculateTotalWithoutPlan from "../../utils/calculateTotalWithoutPlan";
 import calculateTotalWithPlan from "../../utils/calculateTotalWithPlan";
-import { useEffect, useState } from "react";
 
 export interface DataProps {
   origin: DDDTypes;
@@ -29,7 +28,6 @@ export function ResultModal({
   const totalValueWithoutPlan = Number(
     calculateTotalWithoutPlan(data).toFixed(2)
   );
-  const discount = Number(totalValueWithoutPlan - totalValueWithPlan);
 
   return (
     <Modal
@@ -63,16 +61,6 @@ export function ResultModal({
           <p>Valor total sem plano</p>
           <p>
             {totalValueWithoutPlan?.toLocaleString("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            })}
-          </p>
-        </Item>
-        <Item>
-          <p>{discount > 0 ? "Desconto" : "Juros"}</p>
-          <p className="discount">
-            {""}
-            {discount?.toLocaleString("pt-BR", {
               style: "currency",
               currency: "BRL",
             })}
