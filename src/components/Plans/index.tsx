@@ -18,15 +18,15 @@ export function Plans() {
             </p>
             <ul>
               <li>
-                <img src={checkImg} alt="" />
+                <img src={checkImg} alt="perk" />
                 30 minutos gratuitos
               </li>
               <li>
-                <img src={checkImg} alt="" />
+                <img src={checkImg} alt="perk" />
                 Ligações intermunicipais
               </li>
               <li>
-                <img src={checkImg} alt="" />
+                <img src={checkImg} alt="perk" />
                 Suporte 24h
               </li>
             </ul>
@@ -41,14 +41,14 @@ export function Plans() {
             </p>
             <ul>
               <li>
-                <img src={checkImg} alt="" /> 1 hora gratuita
+                <img src={checkImg} alt="perk" /> 1 hora gratuita
               </li>
               <li>
-                <img src={checkImg} alt="" />
+                <img src={checkImg} alt="perk" />
                 Ligações intermunicipais
               </li>
               <li>
-                <img src={checkImg} alt="" />
+                <img src={checkImg} alt="perk" />
                 Suporte 24h
               </li>
             </ul>
@@ -63,14 +63,14 @@ export function Plans() {
             </p>
             <ul>
               <li>
-                <img src={checkImg} alt="" />2 horas gratuitas
+                <img src={checkImg} alt="perk" />2 horas gratuitas
               </li>
               <li>
-                <img src={checkImg} alt="" />
+                <img src={checkImg} alt="perk" />
                 Ligações intermunicipais
               </li>
               <li>
-                <img src={checkImg} alt="" />
+                <img src={checkImg} alt="perk" />
                 Suporte 24h
               </li>
             </ul>

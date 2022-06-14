@@ -38,6 +38,10 @@ export const NavLink = styled(Link)`
 
   & + a {
     margin-left: 2rem;
+
+    @media (max-width: 768px) {
+      margin-left: 0;
+    }
   }
 
   &::after {
@@ -74,12 +78,12 @@ export const NavLink = styled(Link)`
 // for mobile devices
 export const MenuIconForMobile = styled(List).attrs({
   size: 32,
-  color: "black",
   weight: "fill",
 })`
   height: 5rem;
   display: none;
   cursor: pointer;
+  color: var(--text-color);
 
   @media (max-width: 768px) {
     display: block;
@@ -112,6 +116,10 @@ export const MobileMenuContainer = styled.div<MobileContainerProps>`
     right: 1.5rem;
     cursor: pointer;
     outline: none;
+
+    svg {
+      color: var(--text-color);
+    }
   }
 
   main {
@@ -120,16 +128,4 @@ export const MobileMenuContainer = styled.div<MobileContainerProps>`
     align-items: flex-start;
     gap: 2rem;
   }
-`;
-
-export const MobileMenuLink = styled(Link)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  text-decoration: none;
-  list-style: none;
-  transition: 0.2s ease-in-out;
-  color: var(--text-color);
-  cursor: pointer;
 `;

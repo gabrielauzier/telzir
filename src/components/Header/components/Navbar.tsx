@@ -1,23 +1,11 @@
-import { useLocation } from "react-router-dom";
-import { NavLink } from "../styles";
+import { ActiveLink } from "./ActiveLink";
 
 export function Navbar() {
-  const { pathname } = useLocation();
-
   return (
     <nav>
-      <NavLink to="/" className={pathname === "/" ? "active" : ""}>
-        Home
-      </NavLink>
-      <NavLink to="/plans" className={pathname === "/plans" ? "active" : ""}>
-        Planos
-      </NavLink>
-      <NavLink
-        to="/simulation"
-        className={pathname === "/simulation" ? "active" : ""}
-      >
-        Simulação
-      </NavLink>
+      <ActiveLink to="/">Home</ActiveLink>
+      <ActiveLink to="/plans">Planos</ActiveLink>
+      <ActiveLink to="/simulation">Simulação</ActiveLink>
     </nav>
   );
 }

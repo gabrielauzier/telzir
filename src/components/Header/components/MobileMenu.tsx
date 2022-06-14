@@ -1,5 +1,6 @@
-import { X as CloseIcon } from "phosphor-react";
-import { MobileMenuContainer, MobileMenuLink } from "../styles";
+import { CaretLeft } from "phosphor-react";
+import { MobileMenuContainer } from "../styles";
+import { ActiveLink } from "./ActiveLink";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -10,19 +11,19 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   return (
     <MobileMenuContainer isOpen={isOpen}>
       <header>
-        <CloseIcon size={32} color="black" onClick={onClose} />
+        <CaretLeft size={32} onClick={onClose} />
       </header>
 
       <main>
-        <MobileMenuLink onClick={onClose} to="/">
+        <ActiveLink onClick={onClose} to="/">
           Home
-        </MobileMenuLink>
-        <MobileMenuLink onClick={onClose} to="/plans">
+        </ActiveLink>
+        <ActiveLink onClick={onClose} to="/plans">
           Planos
-        </MobileMenuLink>
-        <MobileMenuLink onClick={onClose} to="/simulation">
+        </ActiveLink>
+        <ActiveLink onClick={onClose} to="/simulation">
           Simulação
-        </MobileMenuLink>
+        </ActiveLink>
       </main>
     </MobileMenuContainer>
   );
