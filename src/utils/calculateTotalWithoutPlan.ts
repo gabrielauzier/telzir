@@ -7,7 +7,7 @@ interface CalculateTotalWithoutPlanProps {
   duration: number;
 }
 
-export default function ({
+export default function calculateTotalWithoutPlan({
   origin,
   destiny,
   duration,

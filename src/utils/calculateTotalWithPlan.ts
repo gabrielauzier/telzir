@@ -8,7 +8,7 @@ interface CalculateTotalWithPlanProps {
   plan: PlanTypes;
 }
 
-export default function ({
+export default function calculateTotalWithPlan({
   origin,
   destiny,
   duration,

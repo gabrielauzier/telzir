@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MinusCircle, Info } from "phosphor-react";
+import { MinusCircle } from "phosphor-react";
 
 export const Container = styled.div`
   max-width: 720px;
