@@ -1,11 +1,12 @@
-import { createContext, ReactNode, useContext, useState } from "react";
-
 import {
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut as firebaseSignOut,
-} from "firebase/auth";
-import { auth } from "../services/firebase";
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+
+import { auth, GoogleAuthProvider } from "../services/firebase";
 import { createUser } from "../services/api";
 
 interface User {
@@ -31,8 +32,11 @@ function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
 
   async function signInWithGoogle() {
-    await signInWithPopup(auth, new GoogleAuthProvider())
+    await auth
+      .signInWithPopup(GoogleAuthProvider)
       .then((response) => {
+        if (!response.user) throw new Error("Error loading user data");
+
         const { uid, displayName, email, photoURL } = response.user;
 
         if (!displayName || !email || !photoURL)
@@ -45,10 +49,24 @@ function AuthProvider({ children }: AuthProviderProps) {
   }
 
   async function signOut() {
-    await firebaseSignOut(auth)
+    await auth
+      .signOut()
       .then(() => setUser(null))
       .catch((err) => console.log(err));
   }
+
+  useEffect(() => {
+    auth.onAuthStateChanged((loggedInUser) => {
+      if (loggedInUser) {
+        const { uid, displayName, email, photoURL } = loggedInUser;
+
+        if (!displayName || !email || !photoURL)
+          throw new Error("Missing information from Google Account");
+
+        setUser({ id: uid, name: displayName, email, photo: photoURL });
+      }
+    });
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, signInWithGoogle, signOut }}>
