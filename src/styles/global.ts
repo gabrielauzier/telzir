@@ -32,6 +32,7 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     body {
+        overflow-y: scroll;
         background: var(--body-color);
         -webkit-font-smoothing: antialiased; // make font shaper
     }
